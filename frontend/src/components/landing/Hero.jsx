@@ -94,7 +94,7 @@ export default function Hero({ onLogin, onSubscribe }) {
 
                     {/* Trust strip */}
                     <div className="mt-10 grid grid-cols-3 gap-4 max-w-lg">
-                        <Stat label="Aktif Sembol" value="500+" accent="#26a69a" />
+                        <Stat label="Kapsama" value="BIST100" accent="#26a69a" />
                         <Stat label="Sinyal Doğruluğu" value="68%" accent="#ffb300" tag="Backtest" />
                         <Stat label="Veri Periyodu" value="5dk" accent="#e040fb" mono />
                     </div>
