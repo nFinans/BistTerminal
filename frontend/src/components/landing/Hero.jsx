@@ -3,7 +3,7 @@ import { ArrowRight, Sparkles, Activity, ShieldCheck } from "lucide-react";
 import DashboardMockup from "@/components/landing/DashboardMockup";
 import SignalTicker from "@/components/landing/SignalTicker";
 
-export default function Hero({ onLogin, onSubscribe }) {
+export default function Hero({ onLogin, loginUrl, onSubscribe }) {
     return (
         <section
             id="top"
@@ -68,8 +68,14 @@ export default function Hero({ onLogin, onSubscribe }) {
                     </p>
 
                     <div className="mt-8 flex flex-wrap gap-3">
-                        <button
-                            onClick={onLogin}
+                        <a
+                            href={loginUrl}
+                            onClick={(e) => {
+                                if (onLogin) {
+                                    e.preventDefault();
+                                    onLogin();
+                                }
+                            }}
                             data-testid="hero-login-btn"
                             className="cta-shine glow-teal inline-flex items-center gap-2 px-6 py-3.5 rounded-md text-sm font-semibold tracking-wider text-white"
                             style={{
@@ -80,7 +86,7 @@ export default function Hero({ onLogin, onSubscribe }) {
                         >
                             SİSTEME GİRİŞ YAP
                             <ArrowRight className="w-4 h-4" />
-                        </button>
+                        </a>
                         <button
                             onClick={onSubscribe}
                             data-testid="hero-subscribe-btn"
@@ -88,7 +94,7 @@ export default function Hero({ onLogin, onSubscribe }) {
                             style={{ fontFamily: "JetBrains Mono, monospace" }}
                         >
                             <Sparkles className="w-4 h-4 text-[#ffb300]" />
-                            HEMEN KATIL
+                            PAKET SATIN AL
                         </button>
                     </div>
 

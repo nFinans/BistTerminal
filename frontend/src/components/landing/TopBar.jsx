@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { LogIn, Brain } from "lucide-react";
 
-export default function TopBar({ onLogin }) {
+export default function TopBar({ onLogin, loginUrl }) {
     const [scrolled, setScrolled] = useState(false);
 
     useEffect(() => {
@@ -54,19 +54,25 @@ export default function TopBar({ onLogin }) {
                         Sentiment
                     </a>
                     <a href="#pricing" className="hover:text-white transition" data-testid="nav-pricing">
-                        Üyelik
+                        Paket Satın Al
                     </a>
                 </nav>
 
-                <button
-                    onClick={onLogin}
+                <a
+                    href={loginUrl}
+                    onClick={(e) => {
+                        if (onLogin) {
+                            e.preventDefault();
+                            onLogin();
+                        }
+                    }}
                     data-testid="topbar-login-btn"
                     className="cta-shine inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold tracking-wider rounded-md text-white border border-[#26a69a] hover:bg-[#26a69a]/15 transition"
                     style={{ fontFamily: "JetBrains Mono, monospace" }}
                 >
                     <LogIn className="w-4 h-4" />
                     SİSTEME GİRİŞ YAP
-                </button>
+                </a>
             </div>
         </header>
     );

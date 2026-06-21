@@ -9,7 +9,7 @@ import TechStack from "@/components/landing/TechStack";
 import FooterSection from "@/components/landing/FooterSection";
 import WhopModal from "@/components/landing/WhopModal";
 
-const LOGIN_URL = "https://bist.privyalgo.com";
+const LOGIN_URL = "https://bist.privyalgo.com/app";
 
 // Whop checkout URLs (plan IDs provided by user)
 const WHOP_PLANS = {
@@ -31,7 +31,12 @@ export default function Landing() {
     const [whopPlan, setWhopPlan] = useState(null);
 
     const handleLogin = () => {
-        window.location.href = LOGIN_URL;
+        window.open(LOGIN_URL, "_self");
+    };
+
+    const handleScrollToPricing = () => {
+        const el = document.getElementById("pricing");
+        if (el) el.scrollIntoView({ behavior: "smooth" });
     };
 
     const handleOpenPlan = (planKey) => {
@@ -44,8 +49,8 @@ export default function Landing() {
             style={{ background: "var(--bg-0)" }}
             data-testid="landing-root"
         >
-            <TopBar onLogin={handleLogin} />
-            <Hero onLogin={handleLogin} onSubscribe={() => handleOpenPlan("sixMonth")} />
+            <TopBar onLogin={handleLogin} loginUrl={LOGIN_URL} />
+            <Hero onLogin={handleLogin} loginUrl={LOGIN_URL} onSubscribe={handleScrollToPricing} />
             <Features />
             <Kings />
             <SentimentPanels />
