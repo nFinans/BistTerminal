@@ -70,7 +70,7 @@ export default function Pricing({ onSelect }) {
                         <span className="text-[#a0a4b0]">için tasarlandı.</span>
                     </h2>
                     <p className="mt-5 text-[#a0a4b0]">
-                        Ödemeler Whop güvencesi altında, sayfadan çıkmadan tamamlanır.
+                        Ödemeler nFinans güvencesi altında, Whop Ödeme Alt Yapısına Bağlanılarak sayfadan çıkmadan tamamlanır.
                     </p>
                 </div>
 
@@ -85,7 +85,7 @@ export default function Pricing({ onSelect }) {
                 </div>
 
                 <p className="mt-10 text-center text-xs font-mono text-[#6b7080] max-w-2xl mx-auto">
-                    * Üyeliğiniz Whop tarafından yönetilir. Tüm planlar PrivyAlgo kullanıcı sözleşmesine
+                    * Üyeliğiniz nFinans tarafından PrivyAlgo adına yönetilir. Tüm planlar PrivyAlgo kullanıcı sözleşmesine
                     tabidir. ** TradingView PremiumAlgo Paketi yıllık aboneliğe özel hediyedir.
                 </p>
             </div>
@@ -167,9 +167,30 @@ function PlanCard({ plan, onSelect }) {
                 </div>
             </div>
 
-            {/* Legal consents */}
+            {/* Plan Özellikleri (Features) - Yukarıya alındı */}
+            <ul className="mt-8 space-y-3">
+                {plan.features.map((f, i) => {
+                    const Icon = f.icon;
+                    return (
+                        <li key={i} className="flex items-start gap-3 text-sm text-[#d1d4dc]">
+                            <span
+                                className="w-5 h-5 rounded-md flex items-center justify-center shrink-0 mt-0.5"
+                                style={{
+                                    background: `${f.color}1a`,
+                                    border: `1px solid ${f.color}55`,
+                                }}
+                            >
+                                <Icon className="w-3 h-3" style={{ color: f.color }} />
+                            </span>
+                            <span>{f.t}</span>
+                        </li>
+                    );
+                })}
+            </ul>
+
+            {/* Legal consents (Onay Metinleri) - Butonun hemen üstüne alındı */}
             <div
-                className="mt-6 rounded-lg p-4 space-y-2.5"
+                className="mt-8 rounded-lg p-4 space-y-2.5"
                 style={{
                     background: "rgba(15,19,32,0.7)",
                     border: "1px solid rgba(43,43,67,0.55)",
@@ -204,6 +225,7 @@ function PlanCard({ plan, onSelect }) {
                 ))}
             </div>
 
+            {/* Satın Alma Butonu */}
             <button
                 onClick={handleBuy}
                 disabled={false}
@@ -223,31 +245,12 @@ function PlanCard({ plan, onSelect }) {
                 {plan.cta}
             </button>
 
+            {/* Uyarı Metni */}
             {!allAccepted && (
                 <p className="mt-2 text-[10px] font-mono text-[#6b7080] text-center">
                     Ödeme sayfası açılmadan önce 3 onayı işaretlemeniz gerekir.
                 </p>
             )}
-
-            <ul className="mt-6 space-y-3">
-                {plan.features.map((f, i) => {
-                    const Icon = f.icon;
-                    return (
-                        <li key={i} className="flex items-start gap-3 text-sm text-[#d1d4dc]">
-                            <span
-                                className="w-5 h-5 rounded-md flex items-center justify-center shrink-0 mt-0.5"
-                                style={{
-                                    background: `${f.color}1a`,
-                                    border: `1px solid ${f.color}55`,
-                                }}
-                            >
-                                <Icon className="w-3 h-3" style={{ color: f.color }} />
-                            </span>
-                            <span>{f.t}</span>
-                        </li>
-                    );
-                })}
-            </ul>
         </div>
     );
 }
