@@ -31,7 +31,7 @@ export default function Landing() {
     const [whopPlan, setWhopPlan] = useState(null);
 
     const handleLogin = () => {
-        window.open(LOGIN_URL, "_self");
+        window.open(LOGIN_URL, "_blank", "noopener,noreferrer");
     };
 
     const handleScrollToPricing = () => {

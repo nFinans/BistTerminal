@@ -70,12 +70,8 @@ export default function Hero({ onLogin, loginUrl, onSubscribe }) {
                     <div className="mt-8 flex flex-wrap gap-3">
                         <a
                             href={loginUrl}
-                            onClick={(e) => {
-                                if (onLogin) {
-                                    e.preventDefault();
-                                    onLogin();
-                                }
-                            }}
+                            target="_blank"
+                            rel="noopener noreferrer"
                             data-testid="hero-login-btn"
                             className="cta-shine glow-teal inline-flex items-center gap-2 px-6 py-3.5 rounded-md text-sm font-semibold tracking-wider text-white"
                             style={{

@@ -60,12 +60,8 @@ export default function TopBar({ onLogin, loginUrl }) {
 
                 <a
                     href={loginUrl}
-                    onClick={(e) => {
-                        if (onLogin) {
-                            e.preventDefault();
-                            onLogin();
-                        }
-                    }}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     data-testid="topbar-login-btn"
                     className="cta-shine inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold tracking-wider rounded-md text-white border border-[#26a69a] hover:bg-[#26a69a]/15 transition"
                     style={{ fontFamily: "JetBrains Mono, monospace" }}

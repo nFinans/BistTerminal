@@ -1,5 +1,6 @@
-import React from "react";
-import { Check, Crown, MessageCircle, TrendingUp } from "lucide-react";
+import React, { useState } from "react";
+import { Check, Crown, MessageCircle, TrendingUp, AlertCircle } from "lucide-react";
+import { toast } from "sonner";
 
 const PLANS = [
     {
@@ -41,6 +42,12 @@ const PLANS = [
     },
 ];
 
+const LEGAL_LINKS = [
+    { key: "uyelik", slug: "uyelik-sozlesmesi", label: "Üyelik Sözleşmesi" },
+    { key: "kvkk", slug: "kvkk", label: "KVKK Aydınlanma Metni" },
+    { key: "gizlilik", slug: "gizlilik-politikasi", label: "Gizlilik Politikası" },
+];
+
 export default function Pricing({ onSelect }) {
     return (
         <section
@@ -69,7 +76,11 @@ export default function Pricing({ onSelect }) {
 
                 <div className="mt-14 grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
                     {PLANS.map((p) => (
-                        <PlanCard key={p.id} plan={p} onSelect={() => onSelect(p.id)} />
+                        <PlanCard
+                            key={p.id}
+                            plan={p}
+                            onSelect={() => onSelect(p.id)}
+                        />
                     ))}
                 </div>
 
@@ -83,6 +94,29 @@ export default function Pricing({ onSelect }) {
 }
 
 function PlanCard({ plan, onSelect }) {
+    const [consents, setConsents] = useState({
+        uyelik: false,
+        kvkk: false,
+        gizlilik: false,
+    });
+
+    const allAccepted = consents.uyelik && consents.kvkk && consents.gizlilik;
+
+    const handleBuy = () => {
+        const missing = LEGAL_LINKS.filter((l) => !consents[l.key]).map((l) => l.label);
+        if (missing.length > 0) {
+            toast.error("Lütfen yasal metinleri onaylayın", {
+                description: `Devam etmek için şu onayları vermelisiniz: ${missing.join(", ")}.`,
+                duration: 5500,
+                icon: <AlertCircle className="w-4 h-4 text-red-400" />,
+            });
+            return;
+        }
+        onSelect();
+    };
+
+    const toggle = (key) => setConsents((c) => ({ ...c, [key]: !c[key] }));
+
     return (
         <div
             className="relative rounded-2xl p-8 transition-all hover:translate-y-[-3px]"
@@ -133,10 +167,50 @@ function PlanCard({ plan, onSelect }) {
                 </div>
             </div>
 
+            {/* Legal consents */}
+            <div
+                className="mt-6 rounded-lg p-4 space-y-2.5"
+                style={{
+                    background: "rgba(15,19,32,0.7)",
+                    border: "1px solid rgba(43,43,67,0.55)",
+                }}
+            >
+                {LEGAL_LINKS.map((l) => (
+                    <label
+                        key={l.key}
+                        className="flex items-start gap-2.5 cursor-pointer group select-none"
+                        data-testid={`consent-${plan.id}-${l.key}`}
+                    >
+                        <input
+                            type="checkbox"
+                            checked={consents[l.key]}
+                            onChange={() => toggle(l.key)}
+                            className="mt-0.5 w-4 h-4 rounded accent-[#26a69a] shrink-0 cursor-pointer"
+                            aria-label={`${l.label} onayı`}
+                        />
+                        <span className="text-[12px] leading-relaxed text-[#a0a4b0] group-hover:text-white transition">
+                            <a
+                                href={`#/${l.slug}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                onClick={(e) => e.stopPropagation()}
+                                className="text-[#26a69a] hover:underline"
+                            >
+                                {l.label}
+                            </a>
+                            ’ni okudum, kabul ediyorum.
+                        </span>
+                    </label>
+                ))}
+            </div>
+
             <button
-                onClick={onSelect}
+                onClick={handleBuy}
+                disabled={false}
                 data-testid={`plan-cta-${plan.id}`}
-                className="cta-shine w-full mt-6 py-3.5 rounded-md text-sm font-semibold tracking-wider transition"
+                className={`cta-shine w-full mt-5 py-3.5 rounded-md text-sm font-semibold tracking-wider transition ${
+                    allAccepted ? "" : "opacity-90"
+                }`}
                 style={{
                     background: plan.popular
                         ? `linear-gradient(135deg, ${plan.accent} 0%, #d97706 100%)`
@@ -148,6 +222,12 @@ function PlanCard({ plan, onSelect }) {
             >
                 {plan.cta}
             </button>
+
+            {!allAccepted && (
+                <p className="mt-2 text-[10px] font-mono text-[#6b7080] text-center">
+                    Ödeme sayfası açılmadan önce 3 onayı işaretlemeniz gerekir.
+                </p>
+            )}
 
             <ul className="mt-6 space-y-3">
                 {plan.features.map((f, i) => {
