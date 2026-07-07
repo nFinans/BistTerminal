@@ -1,5 +1,5 @@
 import React from "react";
-import { Brain, MessageCircle, Globe } from "lucide-react";
+import { Brain, MessageCircle, Globe, ShieldCheck } from "lucide-react";
 
 const WHATSAPP_URL = "https://wa.me/905415478141";
 const WHATSAPP_LABEL = "+90 541 547 81 41";
@@ -85,7 +85,20 @@ export default function FooterSection() {
                                 bist.privyalgo.com
                             </a>
                         </li>
-                        <li className="pt-3 mt-2 border-t border-[#1e2233]">
+                        
+                        {/* Veri Sorumlusu Alanı */}
+                        <li className="pt-3 mt-3 border-t border-[#1e2233]">
+                            <div className="text-[10px] font-mono uppercase tracking-widest text-[#26a69a] mb-1.5 flex items-center gap-1.5">
+                                <ShieldCheck className="w-3.5 h-3.5" />
+                                Veri Sorumlusu
+                            </div>
+                            <div className="text-[11px] text-[#8a8f9e] leading-relaxed">
+                                NFİNANS FİNANSAL BİLGİ TEKNOLOJİLERİ DANIŞMANLIK EĞİTİM VE TİCARET LİMİTED ŞİRKETİ, MERSİS No: 0631208828100001
+                            </div>
+                        </li>
+
+                        {/* Yasal Alanı */}
+                        <li className="pt-3 mt-3 border-t border-[#1e2233]">
                             <div className="text-[10px] font-mono uppercase tracking-widest text-[#6b7080] mb-2">
                                 Yasal
                             </div>
