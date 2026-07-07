@@ -56,6 +56,9 @@ export default function TopBar({ onLogin, loginUrl }) {
                     <a href="#pricing" className="hover:text-white transition" data-testid="nav-pricing">
                         Paket Satın Al
                     </a>
+                    <a href="https://blog.privyalgo.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition" data-testid="nav-blog">
+                        Blog
+                    </a>
                 </nav>
 
                 <a
