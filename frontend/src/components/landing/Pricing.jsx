@@ -4,10 +4,11 @@ import { toast } from "sonner";
 
 const PLANS = [
     {
-        id: "sixMonth",
+        planId: "sixMonth",
         title: "Premium Plan",
         period: "6 Ay",
-        price: "5400 TL",
+        price: "5400",
+        currency: "TL",
         oldPrice: "7200 TL",
         kdv: "KDV Dahil · Bankacılık Ödeme Aracı Komisyonu Dahildir.",
         tag: "%25 Avantajlı Paket · 6 Aylık yenilenir",
@@ -17,15 +18,16 @@ const PLANS = [
         features: [
             { t: "5-15-60-120 dk. tam veri seti", icon: Check, color: "#26a69a" },
             { t: "Özel Haftalık Bülten", icon: Check, color: "#26a69a" },
-            { t: "Premium Abonelere Özel Whatsapp Grubu", icon: MessageCircle, color: "#5eead4" },
+            { t: "Premium Abonelere Özel Whatsapp Destek Grubu", icon: MessageCircle, color: "#5eead4" },
         ],
         popular: false,
     },
     {
-        id: "yearly",
+        planId: "yearly",
         title: "Premium+ Plan",
         period: "Yıl",
-        price: "9600 TL",
+        price: "9600",
+        currency: "TL",
         oldPrice: "14400 TL",
         kdv: "KDV Dahil · Bankacılık Ödeme Aracı Komisyonu Dahildir.",
         tag: "Yıllık Üyelikte Ekstra %33,33 Tanışma Bonusu · Yıllık yenilenir",
@@ -36,7 +38,7 @@ const PLANS = [
             { t: "5-15-60-120 dk. tam veri seti", icon: Check, color: "#26a69a" },
             { t: "Özel Haftalık Bülten", icon: Check, color: "#26a69a" },
             { t: "1 Yıllık TradingView PremiumAlgo Paketi", icon: TrendingUp, color: "#ef5350" },
-            { t: "Premium+ Abonelere Özel Whatsapp Grubu", icon: MessageCircle, color: "#5eead4" },
+            { t: "Premium+ Abonelere Özel Whatsapp Destek Grubu", icon: MessageCircle, color: "#5eead4" },
         ],
         popular: true,
     },
@@ -57,7 +59,6 @@ export default function Pricing({ onSelect }) {
                 background:
                     "radial-gradient(ellipse at center, rgba(38,166,154,0.06), transparent 70%), #0a0d12",
             }}
-            data-testid="pricing-section"
         >
             <div className="max-w-7xl mx-auto px-5 sm:px-8">
                 <div className="text-center max-w-3xl mx-auto">
@@ -70,16 +71,16 @@ export default function Pricing({ onSelect }) {
                         <span className="text-[#a0a4b0]">için tasarlandı.</span>
                     </h2>
                     <p className="mt-5 text-[#a0a4b0]">
-                        Ödemeler nFinans güvencesi altında, Whop Ödeme Alt Yapısına Bağlanılarak sayfadan çıkmadan tamamlanır.
+                        Ödemeler nFinans güvencesi altında, güvenli İyzico altyapısıyla sayfadan çıkmadan tamamlanır. Ödeme ve Taksit Seçenekleri ödeme ekranında kartınızın bağlı olduğu banka' ya göre değişiklik gösterir...
                     </p>
                 </div>
 
                 <div className="mt-14 grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
                     {PLANS.map((p) => (
                         <PlanCard
-                            key={p.id}
+                            key={p.planId}
                             plan={p}
-                            onSelect={() => onSelect(p.id)}
+                            onSelect={() => onSelect(p)} 
                         />
                     ))}
                 </div>
@@ -112,7 +113,7 @@ function PlanCard({ plan, onSelect }) {
             });
             return;
         }
-        onSelect();
+        onSelect(); 
     };
 
     const toggle = (key) => setConsents((c) => ({ ...c, [key]: !c[key] }));
@@ -127,7 +128,6 @@ function PlanCard({ plan, onSelect }) {
                     ? `0 20px 60px rgba(255,179,0,0.12), 0 0 0 1px ${plan.accent}33 inset`
                     : "0 10px 30px rgba(0,0,0,0.3)",
             }}
-            data-testid={`plan-card-${plan.id}`}
         >
             {plan.popular && (
                 <div
@@ -149,7 +149,7 @@ function PlanCard({ plan, onSelect }) {
                     className="mt-2 text-3xl sm:text-4xl font-bold"
                     style={{ color: plan.accent, fontFamily: "Outfit, sans-serif" }}
                 >
-                    {plan.price}
+                    {plan.price} TL
                 </div>
                 <div className="text-[11px] text-[#6b7080] mt-1">{plan.kdv}</div>
 
@@ -167,7 +167,6 @@ function PlanCard({ plan, onSelect }) {
                 </div>
             </div>
 
-            {/* Plan Özellikleri (Features) - Yukarıya alındı */}
             <ul className="mt-8 space-y-3">
                 {plan.features.map((f, i) => {
                     const Icon = f.icon;
@@ -188,7 +187,6 @@ function PlanCard({ plan, onSelect }) {
                 })}
             </ul>
 
-            {/* Legal consents (Onay Metinleri) - Butonun hemen üstüne alındı */}
             <div
                 className="mt-8 rounded-lg p-4 space-y-2.5"
                 style={{
@@ -200,14 +198,12 @@ function PlanCard({ plan, onSelect }) {
                     <label
                         key={l.key}
                         className="flex items-start gap-2.5 cursor-pointer group select-none"
-                        data-testid={`consent-${plan.id}-${l.key}`}
                     >
                         <input
                             type="checkbox"
                             checked={consents[l.key]}
                             onChange={() => toggle(l.key)}
                             className="mt-0.5 w-4 h-4 rounded accent-[#26a69a] shrink-0 cursor-pointer"
-                            aria-label={`${l.label} onayı`}
                         />
                         <span className="text-[12px] leading-relaxed text-[#a0a4b0] group-hover:text-white transition">
                             <a
@@ -225,11 +221,8 @@ function PlanCard({ plan, onSelect }) {
                 ))}
             </div>
 
-            {/* Satın Alma Butonu */}
             <button
                 onClick={handleBuy}
-                disabled={false}
-                data-testid={`plan-cta-${plan.id}`}
                 className={`cta-shine w-full mt-5 py-3.5 rounded-md text-sm font-semibold tracking-wider transition ${
                     allAccepted ? "" : "opacity-90"
                 }`}
@@ -245,10 +238,9 @@ function PlanCard({ plan, onSelect }) {
                 {plan.cta}
             </button>
 
-            {/* Uyarı Metni */}
             {!allAccepted && (
                 <p className="mt-2 text-[10px] font-mono text-[#6b7080] text-center">
-                    Ödeme sayfası açılmadan önce 3 onayı işaretlemeniz gerekir.
+                    Ödeme sayfası açılmadan önce sözleşmeleri tıklayarak onaylamanız ve işaretlemeniz gerekir.
                 </p>
             )}
         </div>
