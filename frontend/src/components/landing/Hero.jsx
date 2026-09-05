@@ -46,11 +46,11 @@ export default function Hero({ onLogin, loginUrl, onSubscribe }) {
                         Borsa İstanbul’u
                         <br />
                         <span style={{ color: "#26a69a" }}>
-                            algoritmayla
+                            Emir Bazlı Veri Analitikleri 
                         </span>{" "}
                         oku.
                         <br />
-                        <span className="text-white/90">Veriyle</span>{" "}
+                        <span className="text-white/90">Algoritmalarla Analiz ederek</span>{" "}
                         <span className="font-mono text-[#ffb300]">kazan.</span>
                     </h1>
 
@@ -58,13 +58,13 @@ export default function Hero({ onLogin, loginUrl, onSubscribe }) {
                         className="mt-6 text-lg text-[#a0a4b0] max-w-xl leading-relaxed"
                         data-testid="hero-subheadline"
                     >
-                        Privy Neural Algo v2.0, <strong className="text-white">BIST hisseleri</strong> için
-                        nöral / kuantitatif modellerle <span className="text-[#26a69a]">momentum</span>,
-                        <span className="text-[#26a69a]"> sentiment</span> ve
-                        <span className="text-[#ffb300]"> akıllı para akışını</span>{" "}
-                        gerçek zamanlı izler. <span className="text-white">TF AL / TF SAT</span> sinyalleri,
-                        <span className="text-white"> Hedge Wall</span> ve
-                        <span className="text-white"> MaxBuy / MaxSell</span> kümeleriyle profesyonel kararlar verin.
+                        Privy Neural Algo v2.0, <strong className="text-white">BIST hisseleri için</strong> için
+                        nöral / kuantitatif modellerle <span className="text-[#26a69a]">Momentum</span>,
+                        <span className="text-[#26a69a]"> Sentiment</span> ve
+                        <span className="text-[#ffb300]"> akıllı para akışını(likidite akışını)</span>{" "}
+                        gerçek zamanlı olarak anlık izler. <span className="text-white">Algoritmik sinyalleri</span> <span className="text-[#26a69a]">Anlık olarak Emir akışlarına ve Ağırlıklandırılmış Ortalama Fiyatlara göre o an ki yoğun işlem bölgelerinin analizini yaparak,</span>
+                        <span className="text-[#ffb300]"> Hedge Wall</span> ve
+                        <span className="text-[#ffb300]"> MaxBuy / MaxSell</span> gibi <strong className="text-white">Destek-Direnç Bölgelerini</strong> sizin için grafikler üzerinde görselleştirerek anlık verileri okumanızı kolaylaştırır ve yatırımlarınızı yaparken bilinçli kararlaralmanızı sağlar.
                     </p>
 
                     <div className="mt-8 flex flex-wrap gap-3">
@@ -97,8 +97,8 @@ export default function Hero({ onLogin, loginUrl, onSubscribe }) {
                     {/* Trust strip */}
                     <div className="mt-10 grid grid-cols-3 gap-4 max-w-lg">
                         <Stat label="Kapsama" value="BIST100" accent="#26a69a" />
-                        <Stat label="Sinyal Doğruluğu" value="68%" accent="#ffb300" tag="Backtest" />
-                        <Stat label="Veri Periyodu" value="5dk" accent="#e040fb" mono />
+                        <Stat label="Sinyal Doğruluğu" value="68-75 arasında%" accent="#ffb300" tag="Backtest" />
+                        <Stat label="Veri Periyodu" value="5-15-60-120 dk.lık" accent="#e040fb" mono />
                     </div>
                 </div>
 
