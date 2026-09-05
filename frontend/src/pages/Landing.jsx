@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
-import TopBar from '../components/landing/TopBar';
-import Hero from '../components/landing/Hero';
-import Features from '../components/landing/Features';
-import Testimonials from '../components/landing/Testimonials'; // SentimentPanel silindi, senin orijinal Testimonials eklendi.
-import Pricing from '../components/landing/Pricing';
-import FooterSection from '../components/landing/FooterSection'; // (Eğer ismi Footer ise sadece Footer olarak bırakabilirsin)
-import WhopModal from '../components/landing/WhopModal';
+import React, { useState } from "react";
+import TopBar from "@/components/landing/TopBar";
+import Hero from "@/components/landing/Hero";
+import Features from "@/components/landing/Features";
+import Kings from "@/components/landing/Kings";
+import SentimentPanels from "@/components/landing/SentimentPanels";
+import Pricing from "@/components/landing/Pricing";
+import TechStack from "@/components/landing/TechStack";
+import FooterSection from "@/components/landing/FooterSection";
+import WhopModal from "@/components/landing/WhopModal";
 
 // 🟢 ESKİ WHOP YAPISI (İptal edilmedi, şalterle kontrol edilecek) 🟢
 const WHOP_PLANS = {
@@ -27,13 +29,16 @@ export default function Landing() {
   const [selectedPlan, setSelectedPlan] = useState(null);
 
   // 🔄 SİSTEM SEÇİCİ ŞALTER 🔄
+  // İleride Whop'a dönmek istersen bu değeri 'true' yapman yeterli!
   const USE_WHOP = false; 
 
   const handlePlanSelect = (planData) => {
     if (USE_WHOP) {
+      // Şalter açıksa eski Whop statik verisini kullan
       const planId = planData.id || planData.planId;
       setSelectedPlan(WHOP_PLANS[planId]);
     } else {
+      // Şalter kapalıysa yeni sistem için paketin tüm detaylarını gönder
       setSelectedPlan(planData);
     }
   };
@@ -44,8 +49,10 @@ export default function Landing() {
       <main>
         <Hero />
         <Features />
-        <Testimonials /> 
+        <Kings />
+        <SentimentPanels />
         <Pricing onSelect={handlePlanSelect} />
+        <TechStack />
       </main>
       <FooterSection />
       
