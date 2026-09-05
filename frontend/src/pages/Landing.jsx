@@ -1,64 +1,63 @@
-import React, { useState } from "react";
-import TopBar from "@/components/landing/TopBar";
-import Hero from "@/components/landing/Hero";
-import Features from "@/components/landing/Features";
-import Kings from "@/components/landing/Kings";
-import SentimentPanels from "@/components/landing/SentimentPanels";
-import Pricing from "@/components/landing/Pricing";
-import TechStack from "@/components/landing/TechStack";
-import FooterSection from "@/components/landing/FooterSection";
-import WhopModal from "@/components/landing/WhopModal";
+import React, { useState } from 'react';
+import TopBar from '../components/landing/TopBar';
+import Hero from '../components/landing/Hero';
+import Features from '../components/landing/Features';
+import SentimentPanel from '../components/landing/SentimentPanel';
+import Pricing from '../components/landing/Pricing';
+import FooterSection from '../components/landing/FooterSection';
+import WhopModal from '../components/landing/WhopModal';
 
-const LOGIN_URL = "https://bist.privyalgo.com/app";
-
-// Whop checkout URLs (plan IDs provided by user)
+// 🟢 ESKİ WHOP YAPISI (İptal edilmedi, şalterle kontrol edilecek) 🟢
 const WHOP_PLANS = {
-    sixMonth: {
-        title: "Premium Plan — 6 Aylık",
-        price: "5.400 TL",
-        planId: "plan_g4J6Wi1MAafMB",
-        url: "https://whop.com/checkout/plan_g4J6Wi1MAafMB/?d2c=true",
-    },
-    yearly: {
-        title: "Premium+ Plan — Yıllık",
-        price: "9.600 TL",
-        planId: "plan_JeXSEXRXPoExb",
-        url: "https://whop.com/checkout/plan_JeXSEXRXPoExb/?d2c=true",
-    },
+  sixMonth: {
+    planId: "plan_xxxxxx", // Kendi eski Whop plan ID'n
+    title: "Premium Plan - 6 Aylık",
+    price: "5400 TL",
+    url: "https://whop.com/checkout/..." 
+  },
+  yearly: {
+    planId: "plan_yyyyyy", // Kendi eski Whop plan ID'n
+    title: "Premium+ Plan - Yıllık",
+    price: "9600 TL",
+    url: "https://whop.com/checkout/..." 
+  }
 };
 
 export default function Landing() {
-    const [whopPlan, setWhopPlan] = useState(null);
+  const [selectedPlan, setSelectedPlan] = useState(null);
 
-    const handleLogin = () => {
-        window.open(LOGIN_URL, "_blank", "noopener,noreferrer");
-    };
+  // 🔄 SİSTEM SEÇİCİ ŞALTER 🔄
+  // İleride Whop'a dönmek istersen bu değeri 'true' yapman yeterli!
+  const USE_WHOP = false; 
 
-    const handleScrollToPricing = () => {
-        const el = document.getElementById("pricing");
-        if (el) el.scrollIntoView({ behavior: "smooth" });
-    };
+  const handlePlanSelect = (planData) => {
+    if (USE_WHOP) {
+      // Şalter açıksa: Pricing'den gelen paketin ID'sini (sixMonth) al,
+      // yukarıdaki WHOP_PLANS listesinden eski URL'leri bul ve Modal'a gönder.
+      const planId = planData.id || planData.planId;
+      setSelectedPlan(WHOP_PLANS[planId]);
+    } else {
+      // Şalter kapalıysa (ŞU ANKİ DURUM): İyzico/WhatsApp için paketin 
+      // fiyat, başlık gibi TÜM bilgilerini doğrudan yeni Modal'a gönder.
+      setSelectedPlan(planData);
+    }
+  };
 
-    const handleOpenPlan = (planKey) => {
-        setWhopPlan(WHOP_PLANS[planKey]);
-    };
-
-    return (
-        <div
-            className="min-h-screen text-white"
-            style={{ background: "var(--bg-0)" }}
-            data-testid="landing-root"
-        >
-            <TopBar onLogin={handleLogin} loginUrl={LOGIN_URL} />
-            <Hero onLogin={handleLogin} loginUrl={LOGIN_URL} onSubscribe={handleScrollToPricing} />
-            <Features />
-            <Kings />
-            <SentimentPanels />
-            <Pricing onSelect={handleOpenPlan} />
-            <TechStack />
-            <FooterSection />
-
-            <WhopModal plan={whopPlan} onClose={() => setWhopPlan(null)} />
-        </div>
-    );
+  return (
+    <div className="bg-[#0b0e14] min-h-screen text-white font-sans selection:bg-[#26a69a] selection:text-white">
+      <TopBar />
+      <main>
+        <Hero />
+        <Features />
+        <SentimentPanel />
+        <Pricing onSelect={handlePlanSelect} />
+      </main>
+      <FooterSection />
+      
+      <WhopModal 
+        plan={selectedPlan} 
+        onClose={() => setSelectedPlan(null)} 
+      />
+    </div>
+  );
 }
