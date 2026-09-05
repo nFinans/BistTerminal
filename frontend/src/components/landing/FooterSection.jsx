@@ -120,11 +120,24 @@ export default function FooterSection() {
             </div>
 
             <div
-                className="border-t py-5 px-5 sm:px-8 text-[11px] font-mono text-[#6b7080] flex flex-col sm:flex-row items-center justify-between gap-2"
+                className="border-t py-5 px-5 sm:px-8 text-[11px] font-mono text-[#6b7080] flex flex-col md:flex-row items-center justify-between gap-4"
                 style={{ borderColor: "#1e2233" }}
             >
-                <div>© {new Date().getFullYear()} NFİNANS — PrivyAlgo. Tüm hakları saklıdır.</div>
-                <div className="flex items-center gap-2">
+                <div className="order-2 md:order-1 text-center md:text-left">
+                    © {new Date().getFullYear()} NFİNANS — PrivyAlgo. Tüm hakları saklıdır.
+                </div>
+
+                {/* Payment Logos (iyzico requirement) */}
+                <div className="flex items-center justify-center order-1 md:order-2">
+                    <img 
+                        src="/logo_band_white@1X.png" 
+                        alt="Güvenli Ödeme" 
+                        className="h-6 md:h-7 object-contain opacity-80 hover:opacity-100 transition-opacity" 
+                        loading="lazy"
+                    />
+                </div>
+
+                <div className="flex items-center gap-2 order-3">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#26a69a] dot-pulse" />
                     BIST · Live · v2.0
                 </div>
