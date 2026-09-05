@@ -7,59 +7,44 @@ import SentimentPanels from "@/components/landing/SentimentPanels";
 import Pricing from "@/components/landing/Pricing";
 import TechStack from "@/components/landing/TechStack";
 import FooterSection from "@/components/landing/FooterSection";
-import WhopModal from "@/components/landing/WhopModal";
+import WhopModal from "@/components/landing/WhopModal"; // İsmi WhopModal kalsa da içi tamamen senin İyzico/WhatsApp altyapın!
 
-// 🟢 ESKİ WHOP YAPISI (İptal edilmedi, şalterle kontrol edilecek) 🟢
-const WHOP_PLANS = {
-  sixMonth: {
-    planId: "plan_xxxxxx", 
-    title: "Premium Plan - 6 Aylık",
-    price: "5400 TL",
-    url: "https://whop.com/checkout/..." 
-  },
-  yearly: {
-    planId: "plan_yyyyyy", 
-    title: "Premium+ Plan - Yıllık",
-    price: "9600 TL",
-    url: "https://whop.com/checkout/..." 
-  }
-};
+const LOGIN_URL = "https://bist.privyalgo.com/app";
 
 export default function Landing() {
-  const [selectedPlan, setSelectedPlan] = useState(null);
+    // İyzico/WhatsApp ekranına (yeni modale) gidecek plan verisini tutar
+    const [selectedPlan, setSelectedPlan] = useState(null);
 
-  // 🔄 SİSTEM SEÇİCİ ŞALTER 🔄
-  // İleride Whop'a dönmek istersen bu değeri 'true' yapman yeterli!
-  const USE_WHOP = false; 
+    const handleLogin = () => {
+        window.open(LOGIN_URL, "_blank", "noopener,noreferrer");
+    };
 
-  const handlePlanSelect = (planData) => {
-    if (USE_WHOP) {
-      // Şalter açıksa eski Whop statik verisini kullan
-      const planId = planData.id || planData.planId;
-      setSelectedPlan(WHOP_PLANS[planId]);
-    } else {
-      // Şalter kapalıysa yeni sistem için paketin tüm detaylarını gönder
-      setSelectedPlan(planData);
-    }
-  };
+    const handleScrollToPricing = () => {
+        const el = document.getElementById("pricing");
+        if (el) el.scrollIntoView({ behavior: "smooth" });
+    };
 
-  return (
-    <div className="bg-[#0b0e14] min-h-screen text-white font-sans selection:bg-[#26a69a] selection:text-white">
-      <TopBar />
-      <main>
-        <Hero />
-        <Features />
-        <Kings />
-        <SentimentPanels />
-        <Pricing onSelect={handlePlanSelect} />
-        <TechStack />
-      </main>
-      <FooterSection />
-      
-      <WhopModal 
-        plan={selectedPlan} 
-        onClose={() => setSelectedPlan(null)} 
-      />
-    </div>
-  );
+    const handleOpenPlan = (planData) => {
+        // Pricing.jsx'ten gelen plan bilgisini doğrudan İyzico modali için state'e gönderiyoruz.
+        setSelectedPlan(planData);
+    };
+
+    return (
+        <div
+            className="min-h-screen text-white"
+            style={{ background: "var(--bg-0)" }}
+            data-testid="landing-root"
+        >
+            <TopBar onLogin={handleLogin} loginUrl={LOGIN_URL} />
+            <Hero onLogin={handleLogin} loginUrl={LOGIN_URL} onSubscribe={handleScrollToPricing} />
+            <Features />
+            <Kings />
+            <SentimentPanels />
+            <Pricing onSelect={handleOpenPlan} />
+            <TechStack />
+            <FooterSection />
+
+            <WhopModal plan={selectedPlan} onClose={() => setSelectedPlan(null)} />
+        </div>
+    );
 }
