@@ -4,8 +4,8 @@ import { toast } from "sonner";
 
 const PLANS = [
     {
-        id: "sixMonth",          // Ana sayfanın pencereyi açmak için aradığı ID
-        planId: "sixMonth",      // Backend'e gidecek ID
+        id: "sixMonth",
+        planId: "sixMonth",
         title: "Premium Plan",
         period: "6 Ay",
         price: "5400",
@@ -24,8 +24,8 @@ const PLANS = [
         popular: false,
     },
     {
-        id: "yearly",            // Ana sayfanın pencereyi açmak için aradığı ID
-        planId: "yearly",        // Backend'e gidecek ID
+        id: "yearly",
+        planId: "yearly",
         title: "Premium+ Plan",
         period: "Yıl",
         price: "9600",
@@ -61,6 +61,7 @@ export default function Pricing({ onSelect }) {
                 background:
                     "radial-gradient(ellipse at center, rgba(38,166,154,0.06), transparent 70%), #0a0d12",
             }}
+            data-testid="pricing-section"
         >
             <div className="max-w-7xl mx-auto px-5 sm:px-8">
                 <div className="text-center max-w-3xl mx-auto">
@@ -82,7 +83,7 @@ export default function Pricing({ onSelect }) {
                         <PlanCard
                             key={p.id}
                             plan={p}
-                            onSelect={() => onSelect(p.id)}  // KRİTİK DÜZELTME: Ana sayfanın beklediği gibi p.id gönderiyoruz.
+                            onSelect={() => onSelect(p)} 
                         />
                     ))}
                 </div>
@@ -115,7 +116,7 @@ function PlanCard({ plan, onSelect }) {
             });
             return;
         }
-        onSelect(); 
+        onSelect();
     };
 
     const toggle = (key) => setConsents((c) => ({ ...c, [key]: !c[key] }));
@@ -130,6 +131,7 @@ function PlanCard({ plan, onSelect }) {
                     ? `0 20px 60px rgba(255,179,0,0.12), 0 0 0 1px ${plan.accent}33 inset`
                     : "0 10px 30px rgba(0,0,0,0.3)",
             }}
+            data-testid={`plan-card-${plan.id}`}
         >
             {plan.popular && (
                 <div
@@ -151,7 +153,7 @@ function PlanCard({ plan, onSelect }) {
                     className="mt-2 text-3xl sm:text-4xl font-bold"
                     style={{ color: plan.accent, fontFamily: "Outfit, sans-serif" }}
                 >
-                    {plan.price} TL
+                    {plan.price} {plan.currency}
                 </div>
                 <div className="text-[11px] text-[#6b7080] mt-1">{plan.kdv}</div>
 
@@ -200,12 +202,14 @@ function PlanCard({ plan, onSelect }) {
                     <label
                         key={l.key}
                         className="flex items-start gap-2.5 cursor-pointer group select-none"
+                        data-testid={`consent-${plan.id}-${l.key}`}
                     >
                         <input
                             type="checkbox"
                             checked={consents[l.key]}
                             onChange={() => toggle(l.key)}
                             className="mt-0.5 w-4 h-4 rounded accent-[#26a69a] shrink-0 cursor-pointer"
+                            aria-label={`${l.label} onayı`}
                         />
                         <span className="text-[12px] leading-relaxed text-[#a0a4b0] group-hover:text-white transition">
                             <a
@@ -225,6 +229,8 @@ function PlanCard({ plan, onSelect }) {
 
             <button
                 onClick={handleBuy}
+                disabled={false}
+                data-testid={`plan-cta-${plan.id}`}
                 className={`cta-shine w-full mt-5 py-3.5 rounded-md text-sm font-semibold tracking-wider transition ${
                     allAccepted ? "" : "opacity-90"
                 }`}
