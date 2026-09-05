@@ -4,7 +4,8 @@ import { toast } from "sonner";
 
 const PLANS = [
     {
-        planId: "sixMonth",
+        id: "sixMonth",          // Ana sayfanın pencereyi açmak için aradığı ID
+        planId: "sixMonth",      // Backend'e gidecek ID
         title: "Premium Plan",
         period: "6 Ay",
         price: "5400",
@@ -18,12 +19,13 @@ const PLANS = [
         features: [
             { t: "5-15-60-120 dk. tam veri seti", icon: Check, color: "#26a69a" },
             { t: "Özel Haftalık Bülten", icon: Check, color: "#26a69a" },
-            { t: "Premium Abonelere Özel Whatsapp Destek Grubu", icon: MessageCircle, color: "#5eead4" },
+            { t: "Premium Abonelere Özel Whatsapp Grubu", icon: MessageCircle, color: "#5eead4" },
         ],
         popular: false,
     },
     {
-        planId: "yearly",
+        id: "yearly",            // Ana sayfanın pencereyi açmak için aradığı ID
+        planId: "yearly",        // Backend'e gidecek ID
         title: "Premium+ Plan",
         period: "Yıl",
         price: "9600",
@@ -38,7 +40,7 @@ const PLANS = [
             { t: "5-15-60-120 dk. tam veri seti", icon: Check, color: "#26a69a" },
             { t: "Özel Haftalık Bülten", icon: Check, color: "#26a69a" },
             { t: "1 Yıllık TradingView PremiumAlgo Paketi", icon: TrendingUp, color: "#ef5350" },
-            { t: "Premium+ Abonelere Özel Whatsapp Destek Grubu", icon: MessageCircle, color: "#5eead4" },
+            { t: "Premium+ Abonelere Özel Whatsapp Grubu", icon: MessageCircle, color: "#5eead4" },
         ],
         popular: true,
     },
@@ -71,16 +73,16 @@ export default function Pricing({ onSelect }) {
                         <span className="text-[#a0a4b0]">için tasarlandı.</span>
                     </h2>
                     <p className="mt-5 text-[#a0a4b0]">
-                        Ödemeler nFinans güvencesi altında, güvenli İyzico altyapısıyla sayfadan çıkmadan tamamlanır. Ödeme ve Taksit Seçenekleri ödeme ekranında kartınızın bağlı olduğu banka' ya göre değişiklik gösterir...
+                        Ödemeler nFinans güvencesi altında, güvenli İyzico altyapısıyla sayfadan çıkmadan tamamlanır.
                     </p>
                 </div>
 
                 <div className="mt-14 grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
                     {PLANS.map((p) => (
                         <PlanCard
-                            key={p.planId}
+                            key={p.id}
                             plan={p}
-                            onSelect={() => onSelect(p)} 
+                            onSelect={() => onSelect(p.id)}  // KRİTİK DÜZELTME: Ana sayfanın beklediği gibi p.id gönderiyoruz.
                         />
                     ))}
                 </div>
@@ -240,7 +242,7 @@ function PlanCard({ plan, onSelect }) {
 
             {!allAccepted && (
                 <p className="mt-2 text-[10px] font-mono text-[#6b7080] text-center">
-                    Ödeme sayfası açılmadan önce sözleşmeleri tıklayarak onaylamanız ve işaretlemeniz gerekir.
+                    Ödeme sayfası açılmadan önce 3 onayı işaretlemeniz gerekir.
                 </p>
             )}
         </div>
